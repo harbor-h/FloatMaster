@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浮点数转换工具</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="floating_point_converter.css">
+</head>
+<body>
+    <div class="container">
+        <h1>浮点数转换工具</h1>
+
+        <!-- 标签页 -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="standard">IEEE 754标准转换</button>
+            <button class="tab-btn" data-tab="custom">自定义转换</button>
+        </div>
+
+        <!-- IEEE 754标准转换 -->
+        <div id="standard" class="tab-content active">
+            <div class="card">
+                <div class="input-group">
+                    <label for="decimal-input" class="tooltip">
+                        请输入十进制小数
+                        <span class="tooltiptext">支持正数、负数、科学计数法</span>
+                    </label>
+
+                    <!-- 输入框 -->
+                    <input type="number" id="decimal-input" step="any" placeholder="例如：3.14159">
+                </div>
+
+                <!-- 按钮组 -->
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="convert-standard">转换</button>
+                    <button class="btn btn-secondary" onclick="clearInput()">清除</button>
+                </div>
+
+                <!-- 结果显示区域 -->
+                <div class="result-section">
+                    <div class="result-area" id="standard-result">
+                        <button class="copy-btn" onclick="copyResult('standard-result')">复制</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 自定义转换 -->
+        <div id="custom" class="tab-content">
+            <div class="card">
+                <div class="input-group">
+                    <label for="custom-decimal" class="tooltip">
+                        请输入十进制小数
+                        <span class="tooltiptext">支持正数、负数、科学计数法</span>
+                    </label>
+                    <input type="number" id="custom-decimal" step="any" placeholder="例如：3.14159">
+                </div>
+                <div class="input-group">
+                    <label for="exponent-type">阶码选项</label>
+                    <select id="exponent-type">
+                        <option value="excess">移码</option>
+                        <option value="complement">补码</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="exponent-bits">阶码位数 (0-10)</label>
+                    <input type="number" id="exponent-bits" min="0" max="10" placeholder="请输入阶码位数">
+                    <div class="error" id="exponent-error"></div>
+                </div>
+                <div class="input-group">
+                    <label for="mantissa-bits">尾数位数 (0-10)(补码表示)</label>
+                    <input type="number" id="mantissa-bits" min="0" max="10" placeholder="请输入尾数位数">
+                    <div class="error" id="mantissa-error"></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="convert-custom">转换</button>
+                    <button class="btn btn-secondary" onclick="clearInput()">清除</button>
+                </div>
+                <div class="result-section">
+                    <div class="result-area" id="custom-result">
+                        <button class="copy-btn" onclick="copyResult('custom-result')">复制</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加历史记录卡片 -->
+        <div class="card">
+            <div class="history-section">
+                <h3>历史记录</h3>
+                <div id="historyList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="floating_point_converter.js"></script>
+    <script>
+        // 标签页切换
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // 标准转换
+        document.getElementById('convert-standard').addEventListener('click', function() {
+            const decimal = parseFloat(document.getElementById('decimal-input').value);
+            if (isNaN(decimal)) {
+                alert('请输入有效的十进制小数');
+                return;
+            }
+            const result = convertToIEEE754(decimal);
+            document.getElementById('standard-result').textContent = result;
+            updateHistory(decimal, result, 'standard');
+        });
+
+        // 自定义转换
+        document.getElementById('convert-custom').addEventListener('click', function() {
+            try {
+                const decimal = parseFloat(document.getElementById('custom-decimal').value);
+                const exponentType = document.getElementById('exponent-type').value;
+                const exponentBits = parseInt(document.getElementById('exponent-bits').value);
+                const mantissaBits = parseInt(document.getElementById('mantissa-bits').value);
+
+                // 隐藏之前的错误信息
+                document.getElementById('exponent-error').style.display = 'none';
+                document.getElementById('mantissa-error').style.display = 'none';
+
+                // 输入验证
+                if (isNaN(decimal)) {
+                    throw new Error('请输入有效的十进制小数');
+                }
+                if (isNaN(exponentBits) || exponentBits < 1 || exponentBits > 10) {
+                    document.getElementById('exponent-error').style.display = 'block';
+                    document.getElementById('exponent-error').textContent = '阶码位数必须在1-10之间';
+                    return;
+                }
+                if (isNaN(mantissaBits) || mantissaBits < 1 || mantissaBits > 10) {
+                    document.getElementById('mantissa-error').style.display = 'block';
+                    document.getElementById('mantissa-error').textContent = '尾数位数必须在1-10之间';
+                    return;
+                }
+
+                const result = customConversion(decimal, exponentType, exponentBits, mantissaBits);
+                document.getElementById('custom-result').textContent = result.toString();
+                updateHistory(decimal, result.toString(), 'custom');
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // 添加输入验证
+        document.getElementById('exponent-bits').addEventListener('input', function() {
+            const value = parseInt(this.value);
+            const errorElement = document.getElementById('exponent-error');
+            if (isNaN(value) || value < 1 || value > 10) {
+                errorElement.style.display = 'block';
+                errorElement.textContent = '阶码位数必须在1-10之间';
+            } else {
+                errorElement.style.display = 'none';
+            }
+        });
+
+        document.getElementById('mantissa-bits').addEventListener('input', function() {
+            const value = parseInt(this.value);
+            const errorElement = document.getElementById('mantissa-error');
+            if (isNaN(value) || value < 1 || value > 10) {
+                errorElement.style.display = 'block';
+                errorElement.textContent = '尾数位数必须在1-10之间';
+            } else {
+                errorElement.style.display = 'none';
+            }
+        });
+
+        // 添加键盘事件支持
+        document.getElementById('decimal-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('convert-standard').click();
+            }
+        });
+
+        document.getElementById('custom-decimal').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('convert-custom').click();
+            }
+        });
+
+        // 添加清空历史记录按钮
+        const historySection = document.querySelector('.history-section');
+        const clearHistoryBtn = document.createElement('button');
+        clearHistoryBtn.className = 'btn btn-secondary';
+        clearHistoryBtn.textContent = '清空历史记录';
+        clearHistoryBtn.onclick = clearHistory;
+        // 将按钮插入到历史记录列表之前
+        historySection.insertBefore(clearHistoryBtn, document.getElementById('historyList'));
+    </script>
+</body>
+</html>

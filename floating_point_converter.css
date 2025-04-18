@@ -1,0 +1,272 @@
+/*基础样式*/
+:root {
+    --primary: #4CAF50;
+    --secondary: #2196F3;
+    --background: #f5f5f5;
+    --text: #333;
+    --card: white;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/*页面基础样式*/
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--background);
+    color: var(--text);
+    transition: var(--transition);
+}
+
+/*主容器样式*/
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--card);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+/*动画效果*/
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/*卡片样式*/
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/*按钮样式*/
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/*按钮基础样式*/
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+/*主要按钮样式*/
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+/*次要按钮样式*/
+.btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+}
+
+/*按钮悬停效果*/
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/*工具提示样式*/
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/*工具提示文本样式*/
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/*工具提示悬停显示*/
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 输入组样式 */
+.input-group {
+    margin-bottom: 15px;
+}
+
+/*标签样式*/
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text);
+}
+
+/*输入框和选择框样式*/
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: var(--card);
+    color: var(--text);
+}
+
+/*结果显示区域*/
+.result-section {
+    margin-top: 20px;
+}
+
+/*结果区域样式*/
+.result-area {
+    background-color: var(--card);
+    padding: 15px;
+    border-radius: 4px;
+    min-height: 100px;
+    white-space: pre-wrap;
+    color: var(--text);
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+/*复制按钮样式*/
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/*复制按钮悬停效果*/
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+/*结果区域悬停时显示复制按钮*/
+.result-area:hover .copy-btn {
+    opacity: 1;
+}
+
+/*标签页样式*/
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+/*标签按钮样式*/
+.tab-btn {
+    padding: 10px 20px;
+    background-color: #e0e0e0;
+    color: var(--text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/*标签按钮悬停效果*/
+.tab-btn:hover {
+    background-color: #d0d0d0;
+}
+
+/*活动标签按钮样式*/
+.tab-btn.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+/*标签内容样式*/
+.tab-content {
+    display: none;
+}
+
+/*活动标签内容样式*/
+.tab-content.active {
+    display: block;
+}
+
+/*错误信息样式*/
+.error {
+    color: #e74c3c;
+    margin-top: 5px;
+    font-size: 14px;
+    display: none;
+}
+
+/*历史记录项样式*/
+.history-item {
+    padding: 10px;
+    /* 内边距 */
+    border-bottom: 1px solid #eee;
+    /* 底部边框 */
+    transition: background-color 0.3s;
+    /* 过渡效果 */
+}
+
+/*历史记录项悬停效果*/
+.history-item:hover {
+    background-color: var(--background);
+    /* 背景色变化 */
+}
+
+/*响应式设计*/
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
