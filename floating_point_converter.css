@@ -27,9 +27,9 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
-    background-image: 
-        linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%);
+    background-image:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%);
     background-size: 60px 60px;
     background-position: 0 0, 30px 30px;
 }
@@ -63,6 +63,12 @@ body {
     border-radius: 8px;
     box-shadow: var(--shadow);
     transition: var(--transition);
+}
+
+.title {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 36px;
 }
 
 /*动画效果*/
@@ -101,10 +107,10 @@ body {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, 
-        rgba(74, 144, 226, 0.3) 0%, 
-        rgba(0, 184, 148, 0.5) 50%, 
-        rgba(74, 144, 226, 0.3) 100%);
+    background: linear-gradient(90deg,
+            rgba(74, 144, 226, 0.3) 0%,
+            rgba(0, 184, 148, 0.5) 50%,
+            rgba(74, 144, 226, 0.3) 100%);
     opacity: 0.6;
     transition: opacity var(--transition-speed), height var(--transition-speed);
 }
@@ -197,7 +203,8 @@ label {
 }
 
 /*输入框和选择框样式*/
-input, select {
+input,
+select {
     width: 100%;
     padding: 0.8rem 1rem;
     border: 2px solid var(--border-color);
@@ -295,6 +302,12 @@ input, select {
     margin-top: 5px;
     font-size: 14px;
     display: none;
+}
+
+.history-title {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 500;
 }
 
 /*历史记录项样式*/
