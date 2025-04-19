@@ -427,7 +427,7 @@ function initFeedbackSystem() {
     document.getElementById('submit-error').addEventListener('click', () => {
         const errorDesc = document.getElementById('error-input').value.trim();
         const errorExample = document.getElementById('error-example').value.trim();
-        
+
         if (errorDesc && errorExample) {
             submitFeedback('error', { description: errorDesc, example: errorExample });
             document.getElementById('error-input').value = '';
@@ -454,7 +454,7 @@ function submitFeedback(type, content) {
 
     // 这里可以添加发送反馈到服务器的代码
     console.log('Feedback submitted:', feedback);
-    
+
     // 保存到本地存储
     saveFeedback(feedback);
 }
