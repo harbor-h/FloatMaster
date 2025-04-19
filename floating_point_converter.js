@@ -1,5 +1,5 @@
 /**
- * 历史记录数组
+ * 历史记录数组:包含输入，结果和转换类型以及时间戳
  * @type {Array<Object>}
  */
 let conversionHistory = [];
@@ -389,6 +389,86 @@ function customConversion(decimal, exponentType = 'excess', exponentBits = 5, ma
     return result;
 }
 
+/**
+ * 初始化反馈系统
+ */
+function initFeedbackSystem() {
+    // 获取反馈标签按钮和内容
+    const feedbackTabs = document.querySelectorAll('.feedback-tab-btn');
+    const feedbackContents = document.querySelectorAll('.feedback-content');
+
+    // 添加标签切换事件监听器
+    feedbackTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // 移除所有标签和内容的active类
+            feedbackTabs.forEach(t => t.classList.remove('active'));
+            feedbackContents.forEach(c => c.classList.remove('active'));
+
+            // 添加active类到当前标签和对应内容
+            tab.classList.add('active');
+            const contentId = tab.getAttribute('data-feedback-tab');
+            document.getElementById(contentId).classList.add('active');
+        });
+    });
+
+    // 添加建议提交事件监听器
+    document.getElementById('submit-suggestion').addEventListener('click', () => {
+        const suggestion = document.getElementById('suggestion-input').value.trim();
+        if (suggestion) {
+            submitFeedback('suggestion', suggestion);
+            document.getElementById('suggestion-input').value = '';
+            alert('感谢您的建议！');
+        } else {
+            alert('请输入您的建议');
+        }
+    });
+
+    // 添加错误报告提交事件监听器
+    document.getElementById('submit-error').addEventListener('click', () => {
+        const errorDesc = document.getElementById('error-input').value.trim();
+        const errorExample = document.getElementById('error-example').value.trim();
+        
+        if (errorDesc && errorExample) {
+            submitFeedback('error', { description: errorDesc, example: errorExample });
+            document.getElementById('error-input').value = '';
+            document.getElementById('error-example').value = '';
+            alert('感谢您的错误报告！');
+        } else {
+            alert('请完整填写错误描述和示例');
+        }
+    });
+}
+
+/**
+ * 提交反馈
+ * @param {string} type - 反馈类型 ('suggestion' 或 'error')
+ * @param {string|Object} content - 反馈内容
+ */
+function submitFeedback(type, content) {
+    const feedback = {
+        type: type,
+        content: content,
+        timestamp: new Date().toLocaleString(),
+        userAgent: navigator.userAgent
+    };
+
+    // 这里可以添加发送反馈到服务器的代码
+    console.log('Feedback submitted:', feedback);
+    
+    // 保存到本地存储
+    saveFeedback(feedback);
+}
+
+/**
+ * 保存反馈到本地存储
+ * @param {Object} feedback - 反馈对象
+ */
+function saveFeedback(feedback) {
+    let feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
+    feedbacks.push(feedback);
+    localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+}
+
 // 页面加载时初始化
 window.addEventListener('load', function () {
     loadHistory();
@@ -396,6 +476,7 @@ window.addEventListener('load', function () {
     document.getElementById('decimal-input').value = '3.14159';
     document.getElementById('convert-standard').click();
     document.getElementById('decimal-input').value = '';
+    initFeedbackSystem();
 });
 
 

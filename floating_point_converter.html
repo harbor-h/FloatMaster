@@ -86,6 +86,39 @@
             </div>
         </div>
 
+        <!-- 添加反馈卡片 -->
+        <div class="card feedback-card">
+            <div class="feedback-section">
+                <h3>用户反馈</h3>
+                <div class="feedback-tabs">
+                    <button class="feedback-tab-btn active" data-feedback-tab="suggestion">建议</button>
+                    <button class="feedback-tab-btn" data-feedback-tab="error">错误报告</button>
+                </div>
+                
+                <!-- 建议反馈 -->
+                <div id="suggestion" class="feedback-content active">
+                    <div class="input-group">
+                        <label for="suggestion-input">您的建议</label>
+                        <textarea id="suggestion-input" rows="3" placeholder="请输入您的建议..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" id="submit-suggestion">提交建议</button>
+                </div>
+
+                <!-- 错误报告 -->
+                <div id="error" class="feedback-content">
+                    <div class="input-group">
+                        <label for="error-input">错误描述</label>
+                        <textarea id="error-input" rows="3" placeholder="请描述您遇到的错误..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="error-example">错误示例</label>
+                        <input type="text" id="error-example" placeholder="请输入导致错误的数值">
+                    </div>
+                    <button class="btn btn-primary" id="submit-error">提交错误报告</button>
+                </div>
+            </div>
+        </div>
+
         <!-- 添加历史记录卡片 -->
         <div class="card history-card">
             <div class="history-section">
