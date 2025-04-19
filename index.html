@@ -240,7 +240,7 @@
         const clearHistoryBtn = document.createElement('button');
         clearHistoryBtn.className = 'btn btn-secondary';
         clearHistoryBtn.textContent = '清空历史记录';
-        clearHistoryBtn.onclick = HistoryManager.clear
+        clearHistoryBtn.onclick = () => { HistoryManager.clear() }
         // 将按钮插入到历史记录列表之前
         historySection.insertBefore(clearHistoryBtn, document.getElementById('historyList'))
     </script>

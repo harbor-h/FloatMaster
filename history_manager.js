@@ -119,7 +119,7 @@ const HistoryManager = {
    * 清空所有历史记录
    */
   clear() {
-    console.log('我被调用了')
+    // console.log('我被调用了')
     if (confirm('确定要清空所有历史记录吗？')) {
       this.history = []
       this.updateDisplay()
