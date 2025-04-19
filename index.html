@@ -94,7 +94,7 @@
                     <button class="feedback-tab-btn active" data-feedback-tab="suggestion">建议</button>
                     <button class="feedback-tab-btn" data-feedback-tab="error">错误报告</button>
                 </div>
-                
+
                 <!-- 建议反馈 -->
                 <div id="suggestion" class="feedback-content active">
                     <div class="input-group">
@@ -131,22 +131,12 @@
     <script src="history_manager.js"></script>
     <script src="converter.js"></script>
     <script>
-        // 修改复制函数，只复制输入值
-        function copyHistoryItem(index) {
-            const item = conversionHistory[index];
-            navigator.clipboard.writeText(item.input.toString()).then(() => {
-                alert('输入值已复制到剪贴板');
-            }).catch(err => {
-                console.error('复制失败:', err);
-            });
-        }
-
         // 页面加载时初始化
         window.addEventListener('load', function () {
             HistoryManager.load()
             // 设置默认值并显示结果
             document.getElementById('decimal-input').value = '3.14159';
-            document.getElementById('convert-standard').click();
+            document.getElementById('convert-standard').click()
             document.getElementById('decimal-input').value = '';
             HistoryManager.pop()
         })
