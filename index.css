@@ -85,7 +85,7 @@ body {
 }
 
 .container {
-    animation: fadeIn 1s ease-out;
+    animation: fadeIn 1.5s ease-out;
 }
 
 /*卡片样式*/
