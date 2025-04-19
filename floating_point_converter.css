@@ -1,3 +1,39 @@
+/* 导入Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* 全局样式 */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --background-color: #f8f9fa;
+    --card-background: #ffffff;
+    --text-color: #333333;
+    --border-color: #dee2e6;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    background-image: 
+        linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+}
+
 /*基础样式*/
 :root {
     --primary: #4CAF50;
@@ -11,7 +47,6 @@
 
 /*页面基础样式*/
 body {
-    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 20px;
     background-color: var(--background);
@@ -44,22 +79,44 @@ body {
 }
 
 .container {
-    animation: fadeIn 0.5s ease-out;
+    animation: fadeIn 1s ease-out;
 }
 
 /*卡片样式*/
 .card {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--card-background);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 20px var(--shadow-color);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        rgba(74, 144, 226, 0.3) 0%, 
+        rgba(0, 184, 148, 0.5) 50%, 
+        rgba(74, 144, 226, 0.3) 100%);
+    opacity: 0.6;
+    transition: opacity var(--transition-speed), height var(--transition-speed);
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+.card:hover::before {
+    opacity: 0.8;
+    height: 4px;
 }
 
 /*按钮样式*/
@@ -140,15 +197,15 @@ label {
 }
 
 /*输入框和选择框样式*/
-input[type="number"],
-select {
+input, select {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background-color: var(--card);
-    color: var(--text);
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    transition: all var(--transition-speed);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 /*结果显示区域*/
@@ -158,14 +215,14 @@ select {
 
 /*结果区域样式*/
 .result-area {
-    background-color: var(--card);
-    padding: 15px;
-    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    position: relative;
     min-height: 100px;
     white-space: pre-wrap;
-    color: var(--text);
-    border: 1px solid #ddd;
-    position: relative;
+    transition: background-color var(--transition-speed);
 }
 
 /*复制按钮样式*/

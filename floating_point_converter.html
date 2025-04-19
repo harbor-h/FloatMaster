@@ -21,7 +21,7 @@
 
         <!-- IEEE 754标准转换 -->
         <div id="standard" class="tab-content active">
-            <div class="card">
+            <div class="card standard-card">
                 <div class="input-group">
                     <label for="decimal-input" class="tooltip">
                         请输入十进制小数
@@ -49,7 +49,7 @@
 
         <!-- 自定义转换 -->
         <div id="custom" class="tab-content">
-            <div class="card">
+            <div class="card custom-card">
                 <div class="input-group">
                     <label for="custom-decimal" class="tooltip">
                         请输入十进制小数
@@ -87,15 +87,65 @@
         </div>
 
         <!-- 添加历史记录卡片 -->
-        <div class="card">
+        <div class="card history-card">
             <div class="history-section">
                 <h3>历史记录</h3>
-                <div id="historyList"></div>
+                <div id="historyList" class="history-list"></div>
             </div>
         </div>
     </div>
 
     <script src="floating_point_converter.js"></script>
+    <script>
+        // 覆盖历史记录显示函数
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+
+            if (conversionHistory.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'history-item';
+                emptyMessage.textContent = '暂无历史记录';
+                historyList.appendChild(emptyMessage);
+                return;
+            }
+
+            conversionHistory.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                
+                // 根据转换类型决定显示内容
+                let resultDisplay = '';
+                if (item.type === 'custom') {
+                    // 对于自定义转换，只显示最后一行（完整二进制表示）
+                    const lines = item.result.split('\n');
+                    resultDisplay = lines[lines.length - 1];
+                }
+                
+                div.innerHTML = `
+                    <div><strong>${item.timestamp}</strong></div>
+                    <div>类型: ${item.type === 'standard' ? 'IEEE 754标准转换' : '自定义转换'}</div>
+                    <div>输入: ${item.input}</div>
+                    ${resultDisplay ? `<div>结果: ${resultDisplay}</div>` : ''}
+                    <div class="history-actions">
+                        <button class="btn btn-secondary" onclick="copyHistoryItem(${index})">复制输入值</button>
+                        <button class="btn btn-secondary" onclick="deleteHistoryItem(${index})">删除</button>
+                    </div>
+                `;
+                historyList.appendChild(div);
+            });
+        }
+
+        // 修改复制函数，只复制输入值
+        function copyHistoryItem(index) {
+            const item = conversionHistory[index];
+            navigator.clipboard.writeText(item.input.toString()).then(() => {
+                alert('输入值已复制到剪贴板');
+            }).catch(err => {
+                console.error('复制失败:', err);
+            });
+        }
+    </script>
 </body>
 
 </html>
