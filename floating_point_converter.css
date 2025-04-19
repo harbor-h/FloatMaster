@@ -144,13 +144,13 @@ body {
 
 /*主要按钮样式*/
 .btn-primary {
-    background-color: var(--primary);
+    background-image: linear-gradient(to bottom right, #66bb6a, #43a047);
     color: white;
 }
 
 /*次要按钮样式*/
 .btn-secondary {
-    background-color: var(--secondary);
+    background-image: linear-gradient(to bottom right, #42a5f5, #1e88e5);
     color: white;
 }
 
