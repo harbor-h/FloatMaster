@@ -340,3 +340,85 @@ select {
         width: 100%;
     }
 }
+
+/* 反馈卡片样式 */
+.feedback-card {
+    margin-bottom: 2rem;
+}
+
+.feedback-section h3 {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.feedback-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.feedback-tab-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--secondary-color);
+    color: white;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.feedback-tab-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.feedback-tab-btn.active {
+    background-color: var(--primary-color);
+}
+
+.feedback-content {
+    display: none;
+}
+
+.feedback-content.active {
+    display: block;
+}
+
+.feedback-content textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    transition: all var(--transition-speed);
+    background: rgba(255, 255, 255, 0.9);
+    resize: vertical;
+    min-height: 100px;
+}
+
+.feedback-content textarea:focus,
+.feedback-content input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.feedback-content .btn-primary {
+    margin-top: 1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
